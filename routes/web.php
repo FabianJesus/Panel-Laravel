@@ -19,8 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/Trabajos', 'WorksController@index')->name('works');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/newClient', 'WorksController@storeClient')->name('newClient');
+Route::post('/newJob', 'WorksController@storeJob')->name('newJob');

@@ -11,17 +11,16 @@ class CreateWorksTable extends Migration
      *
      * @return void
      */
+    //TODO:add      $table->dateTime('start'); $table->dateTime('ending'); and function need 
     public function up()
     {
         Schema::create('works', function (Blueprint $table) {
             $table->id();
             $table->string('direction');
-            $table->dateTime('start');
-            $table->dateTime('ending');
             $table->double('budget');
             $table->double('cost');
             $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('client_id')->references('id')->on('works');
             $table->timestamps();
         });
     }
