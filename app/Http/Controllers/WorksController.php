@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Works;
+use App\clients;
 class WorksController extends Controller
 {
     public function __construct()
@@ -38,10 +39,7 @@ class WorksController extends Controller
     {
 
         $status2="Email no es correcto o cliente no creado";
-        $id = DB::table('clients')
-            ->select('id')
-            ->where('email', '=', $request['client'])
-            ->first();    
+        $id =  $this->getIdClient($request['client']);
         if($id != null)
         {
             DB::table('works')->insert(
@@ -51,5 +49,12 @@ class WorksController extends Controller
             $status2="Trabajo insertado correctamente";
         }
         return back()->with(compact('status2'));
+    }
+    private function getIdClient($email)
+    {
+        return DB::table('clients')
+        ->select('id')
+        ->where('email', '=', $email)
+        ->first();
     }
 }

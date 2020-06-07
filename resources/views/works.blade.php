@@ -9,99 +9,40 @@
         <div class="text-md-center col-md-12">
             <h3>Trabajos</h3>
         </div>
-        
-            <div class="card col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
-                      <thead>
+        <div class="card col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Direccion</th>
+                        <th>Presupuesto €</th>
+                        <th>Coste €</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($works as $work)
                         <tr>
-                          <th>Cliente</th>
-                          <th>Direccion</th>
-                          <th>Presupuesto €</th>
-                          <th>Coste €</th>
+                        <td>
+                        <a href="{{url('cliente/'.$work->client_id)}}"  target="_blank">{{$work->client['name']}}</a>
+                        </td>
+                        <td>{{$work->direction}}</td>
+                        <td>{{$work->budget}}</td>
+                        <td>{{$work->cost}}</td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($works as $work)
-                            <tr>
-                            <td>{{$work->client['name']}}</td>
-                            <td>{{$work->direction}}</td>
-                            <td>{{$work->budget}}</td>
-                            <td>{{$work->cost}}</td>
-                            </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
-                    {{$works->links()}}
-                </div>
+                    @endforeach
+                    </tbody>
+                </table>
+                {{$works->links()}}
             </div>
+        </div>
     </div>
         <div class="col-md-6">
-            <form method="POST" action="{{ route('newClient') }}">
-                @csrf
-                <div class="form-group text-md-center">
-                    <h3>Registrar nuevo cliente</h3>
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
-                </div>
-                <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
-
-                    <div class="col-md-6">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
-
-                    <div class="col-md-6">
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Telefono') }}</label>
-
-                    <div class="col-md-6">
-                        <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" required>
-
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row mb-0">
-                    <div class="col-md-6 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Registrar Cliente') }}
-                        </button>
-                    </div>
-                </div>
-            </form>
-
             <form method="POST" class="mt-4" action="{{ route('newJob') }}">
                 @csrf
                 <div class="form-group text-md-center ">
                     <h3>Registrar Nuevo trabajo</h3>
-                    @if (session('status2'))
+                @if (session('status2'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status2') }}
                     </div>
@@ -112,7 +53,9 @@
 
                     <div class="col-md-6">
                         <input id="client" type="text" class="form-control @error('client') is-invalid @enderror" name="client" value="{{ old('client') }}" required autofocus>
-
+                        <a href="" class="ml-3" data-toggle="modal" data-target="#exampleModal">
+                            Nuevo Cliente
+                        </a>
                         @error('client')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -168,6 +111,81 @@
                 </div>
             </form>
         </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="exampleModalLabel">Registrar nuevo cliente</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('newClient') }}">
+                        @csrf
+                        <div class="form-group text-md-center">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
+        
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+        
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+        
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
+        
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+        
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+        
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Telefono') }}</label>
+        
+                            <div class="col-md-6">
+                                <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" required>
+        
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Registrar Cliente') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
     </div>
 </div>
 @endsection

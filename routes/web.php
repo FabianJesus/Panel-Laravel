@@ -19,7 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/Trabajos', 'WorksController@index')->name('works');
+Route::get('/trabajos', 'WorksController@index')->name('works');
+Route::get('/cliente/{id}', 'ClientsController@getClient');
 
 Route::post('/newClient', 'WorksController@storeClient')->name('newClient');
 Route::post('/newJob', 'WorksController@storeJob')->name('newJob');
+
