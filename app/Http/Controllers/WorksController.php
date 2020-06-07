@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-
+use App\Works;
 class WorksController extends Controller
 {
     public function __construct()
@@ -20,7 +20,8 @@ class WorksController extends Controller
      */
     public function index()
     {
-        return view('works');
+        $works = Works::paginate(10);
+        return view('works',compact('works'));
     }
     //TODO:Need validate $request data and error duplicate email
     public function storeClient(Request $request)
@@ -42,7 +43,7 @@ class WorksController extends Controller
         'updated_at' => \Carbon\Carbon::now()]
     );
 
-        $status="Trabajo insertado correctamente";
+        $status2="Trabajo insertado correctamente";
         return back()->with(compact('status2'));
     }
 }

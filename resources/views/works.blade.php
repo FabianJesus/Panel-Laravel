@@ -6,6 +6,35 @@
 
     <div class="card-body row">
     <div class="col-md-6">
+        <div class="text-md-center col-md-12">
+            <h3>Trabajos</h3>
+        </div>
+        
+            <div class="card col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                      <thead>
+                        <tr>
+                          <th>Cliente</th>
+                          <th>Direccion</th>
+                          <th>Presupuesto €</th>
+                          <th>Coste €</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach ($works as $work)
+                            <tr>
+                            <td>{{$work->client['name']}}</td>
+                            <td>{{$work->direction}}</td>
+                            <td>{{$work->budget}}</td>
+                            <td>{{$work->cost}}</td>
+                            </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                    {{$works->links()}}
+                </div>
+            </div>
     </div>
         <div class="col-md-6">
             <form method="POST" action="{{ route('newClient') }}">
