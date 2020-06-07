@@ -20,17 +20,16 @@ class WorksController extends Controller
      */
     public function index()
     {
-        $works = Works::paginate(10);
+        $works = Works::with('client')->paginate(15);
         return view('works',compact('works'));
     }
-    //TODO:Need validate $request data and error duplicate email
+    //TODO:Need validate $request data
     public function storeClient(Request $request)
     {
-
-    DB::table('clients')->insert(
-        ['name' =>$request['name'],'email' =>$request['email'],'phone' =>$request['phone'],  'created_at' => \Carbon\Carbon::now(),
-        'updated_at' => \Carbon\Carbon::now()]
-    );
+        DB::table('clients')->insert(
+            ['name' =>$request['name'],'email' =>$request['email'],'phone' =>$request['phone'],  'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()]
+        );
 
         $status="Cliente insertado correctamente";
         return back()->with(compact('status'));
@@ -38,12 +37,19 @@ class WorksController extends Controller
     public function storeJob(Request $request)
     {
 
-    DB::table('works')->insert(
-        ['direction' =>$request['direction'],'budget' =>$request['budget'],'cost' =>$request['cost'],'client_id' =>$request['client'], 'created_at' => \Carbon\Carbon::now(),
-        'updated_at' => \Carbon\Carbon::now()]
-    );
-
-        $status2="Trabajo insertado correctamente";
+        $status2="Email no es correcto o cliente no creado";
+        $id = DB::table('clients')
+            ->select('id')
+            ->where('email', '=', $request['client'])
+            ->first();    
+        if($id != null)
+        {
+            DB::table('works')->insert(
+                ['direction' =>$request['direction'],'budget' =>$request['budget'],'cost' =>$request['cost'],'client_id' =>$id->id, 'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()]
+            );
+            $status2="Trabajo insertado correctamente";
+        }
         return back()->with(compact('status2'));
     }
 }

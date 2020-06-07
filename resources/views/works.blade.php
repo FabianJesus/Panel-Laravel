@@ -91,7 +91,7 @@
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-primary">
-                            {{ __('Registrar') }}
+                            {{ __('Registrar Cliente') }}
                         </button>
                     </div>
                 </div>
@@ -108,8 +108,7 @@
                 @endif
                 </div>
                 <div class="form-group row">
-                    <!--TODO: change manual entry of the value by a filter to select the customer's id by searching for it by email and name-->
-                    <label for="client" class="col-md-4 col-form-label text-md-right">{{ __('Id Cliente') }}</label>
+                    <label for="client" class="col-md-4 col-form-label text-md-right">{{ __('Email del cliente') }}</label>
 
                     <div class="col-md-6">
                         <input id="client" type="text" class="form-control @error('client') is-invalid @enderror" name="client" value="{{ old('client') }}" required autofocus>
@@ -163,7 +162,7 @@
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-primary">
-                            {{ __('Registrar') }}
+                            {{ __('Registrar Trabajo') }}
                         </button>
                     </div>
                 </div>
