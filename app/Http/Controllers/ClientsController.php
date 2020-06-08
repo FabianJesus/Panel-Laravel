@@ -16,16 +16,21 @@ class ClientsController extends Controller
     }
     public function getClient($id)
     {
-        $client = DB::table('clients')->where('id', '=', $id)->get();
+        $client = $this->getClientData($id);
         return view('clients',compact('client'));
     }
-    //TODO:Validate
+    
     public function editClient($id, Request $request)
     {
         $status = "Cliente actualizado";
+        $validData = $request->validate([
+            'name' => 'required|min:5|max:70',
+            'email' => 'required|email',
+            'phone' => 'numeric|required'
+        ]);
         $changes = DB::table('clients')
               ->where('id', $id)
-              ->update(['name' => $request['name'],'email' => $request['email'],'phone' => $request['phone']]);
+              ->update(['name' => $validData['name'],'email' => $validData['email'],'phone' => $validData['phone']]);
         if($changes === 0){
             $status = "No se pudo actualizar cliente";
         }
@@ -45,9 +50,9 @@ class ClientsController extends Controller
             ['name' =>$validData['name'],'email' =>$validData['email'],'phone' =>$validData['phone'],  'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now()]
         );
-
+        $email = $validData['email'];
         $status="Cliente insertado correctamente";
-        return back()->with(compact('status'));
+        return back()->with(compact('status','email'));
     }
     public function getIdClient($email)
     {
@@ -55,5 +60,9 @@ class ClientsController extends Controller
         ->select('id')
         ->where('email', '=', $email)
         ->first();
+    }
+    public function getClientData($id)
+    {
+        return DB::table('clients')->where('id', '=', $id)->get();
     }
 }

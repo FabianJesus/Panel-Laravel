@@ -65,34 +65,23 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/trabajos') }}">Trabajos</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Proyecto realizado en Laravel
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                        @if (Route::has('login'))
+                                @auth
+                                    <a href="{{ url('/trabajos') }}"><h2>ACCEDER</h2></a>
+                                @else
+                                    <a href="{{ route('login') }}"><h2>LOGIN</h2></a>
+
+                                    @if (Route::has('register'))
+                                        <a href="{{ route('register') }}"><h2>REGISTRARSE</h2></a>
+                                    @endif
+                                @endauth
+                        @endif
                 </div>
             </div>
         </div>

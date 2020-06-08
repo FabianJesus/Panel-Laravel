@@ -20,7 +20,7 @@ class CreateWorksTable extends Migration
             $table->double('budget');
             $table->double('cost');
             $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('works');
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
     }

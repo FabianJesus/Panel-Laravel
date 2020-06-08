@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Works;
-use App\clients;
 use App\Http\Controllers\ClientsController;
 
 class WorksController extends Controller
@@ -34,15 +33,17 @@ class WorksController extends Controller
         ]);
         $status="Email no es correcto o cliente no creado";
         $id =  $this->clientController->getIdClient($validData['client']);
+        $emailClient = "emaiul";
+
         if($id != null)
         {
             DB::table('works')->insert(
-                ['direction' =>$validData['direction'],'budget' =>$validData['budget'],'cost' =>$validData['cost'],'client_id' =>$id->id, 'created_at' => \Carbon\Carbon::now(),
+                ['direction' =>$validData['direction'],'budget' =>$validData['budget'],'cost' =>$validData['cost'],'client_id' => $id->id, 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()]
             );
             $status = "Trabajo insertado correctamente";
         }
-        return back()->with(compact('status'));
+        return view('works',compact('status'));
     }
     public function deleteJob($id)
     {

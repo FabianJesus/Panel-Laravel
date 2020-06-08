@@ -3,12 +3,31 @@
 
 @section('content')
 <div class="card">
-    <div class="card-header">Email</div>
+    <div class="card-header">Contactar</div>
 
     <div class="card-body">
+        @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
+        @endif
         <form method="POST" action="{{ route('send') }}">
             @csrf
             <div class="form-group text-md-center">
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
+
+                <div class="col-md-6">
+                    <label class="col-md-4 col-form-label">{{$mailData[0]->email}}</label>
+                    <input id="email" type="hidden" name="email" value="{{$mailData[0]->email}}">
+
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $email }}</strong>
+                        </span>
+                    @enderror
+                </div>
             </div>
             <div class="form-group row">
                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
@@ -18,21 +37,7 @@
 
                     @error('name')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
-
-                <div class="col-md-6">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>{{ $name }}</strong>
                         </span>
                     @enderror
                 </div>
@@ -45,20 +50,20 @@
 
                     @error('affair')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>{{ $affair }}</strong>
                         </span>
                     @enderror
                 </div>
             </div>
             <div class="form-group row">
-                <label for="Message" class="col-md-4 col-form-label text-md-right">{{ __('Mesanje') }}</label>
+                <label for="msg" class="col-md-4 col-form-label text-md-right">{{ __('Mensaje') }}</label>
 
                 <div class="col-md-6">
-                    <textarea id="Message" type="Message" class="form-control @error('Message') is-invalid @enderror" name="Message" pattern="[0-9]{9}" required></textarea>
+                    <textarea id="msg" type="msg" class="form-control @error('msg') is-invalid @enderror" name="msg" pattern="[0-9]{9}" required></textarea>
 
-                    @error('Message')
+                    @error('msg')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>{{ $msg }}</strong>
                         </span>
                     @enderror
                 </div>
@@ -71,6 +76,20 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">Historial de mensajes enviados</div>
+
+    <div class="card-body justify-content:center ">
+        @foreach ($msgs as $msgd)
+            <div class="form-group card col-md-4 ">
+                <larabel class="col-form-label">Nombre: {{$msgd->name}}</larabel>
+                <larabel class="col-form-label">Asuntos: {{$msgd->affair}}</larabel>
+                <larabel class="col-form-label">Mensaje: {{$msgd->message}}</larabel>
+                <larabel class="col-form-label">Fecha de envio: {{$msgd->created_at}}</larabel>
+            </div>               
+        @endforeach
     </div>
 </div>
 @endsection

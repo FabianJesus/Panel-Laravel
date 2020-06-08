@@ -2,8 +2,13 @@
 
 @section('content')
 <div class="card">
+   
     <div class="card-header">Trabajos</div>
-
+    @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }};
+        </div>
+    @endif
     <div class="card-body row">
     <div class="col-md-6">
         <div class="text-md-center col-md-12">
@@ -44,17 +49,13 @@
                 @csrf
                 <div class="form-group text-md-center ">
                     <h3>Registrar Nuevo trabajo</h3>
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
+                
                 </div>
                 <div class="form-group row">
                     <label for="client" class="col-md-4 col-form-label text-md-right">{{ __('Email del cliente') }}</label>
 
                     <div class="col-md-6">
-                        <input id="client" type="text" class="form-control @error('client') is-invalid @enderror" name="client" value="{{ old('email') }}" required autocomplete="client">
+                        <input id="client" type="text" class="form-control @error('client') is-invalid @enderror" name="client" value="{{ session('email') }}" required autocomplete="client">
                         <a href="" class="ml-3" data-toggle="modal" data-target="#exampleModal">
                             Nuevo Cliente
                         </a>
