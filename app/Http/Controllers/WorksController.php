@@ -7,54 +7,48 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Works;
 use App\clients;
+use App\Http\Controllers\ClientsController;
+
 class WorksController extends Controller
 {
+    private $clientController;
     public function __construct()
     {
         $this->middleware('auth');
+        $this->clientController = new ClientsController;
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $works = Works::with('client')->paginate(15);
         return view('works',compact('works'));
     }
-    //TODO:Need validate $request data
-    public function storeClient(Request $request)
-    {
-        DB::table('clients')->insert(
-            ['name' =>$request['name'],'email' =>$request['email'],'phone' =>$request['phone'],  'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now()]
-        );
-
-        $status="Cliente insertado correctamente";
-        return back()->with(compact('status'));
-    }
+    
     public function storeJob(Request $request)
     {
-
-        $status2="Email no es correcto o cliente no creado";
-        $id =  $this->getIdClient($request['client']);
+        $validData = $request->validate([
+            'direction' => 'required|min:5|max:255',
+            'budget' => 'numeric|required',
+            'cost' => 'numeric|required',
+            'client'=> 'required|email'
+        ]);
+        $status="Email no es correcto o cliente no creado";
+        $id =  $this->clientController->getIdClient($validData['client']);
         if($id != null)
         {
             DB::table('works')->insert(
-                ['direction' =>$request['direction'],'budget' =>$request['budget'],'cost' =>$request['cost'],'client_id' =>$id->id, 'created_at' => \Carbon\Carbon::now(),
+                ['direction' =>$validData['direction'],'budget' =>$validData['budget'],'cost' =>$validData['cost'],'client_id' =>$id->id, 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()]
             );
-            $status2="Trabajo insertado correctamente";
+            $status = "Trabajo insertado correctamente";
         }
-        return back()->with(compact('status2'));
+        return back()->with(compact('status'));
     }
-    private function getIdClient($email)
+    public function deleteJob($id)
     {
-        return DB::table('clients')
-        ->select('id')
-        ->where('email', '=', $email)
-        ->first();
+        DB::table('works')->where('id', '=', $id)->delete();
+        $status ="Se ha elimidado correctamente";
+        return back()->with(compact('status'));
     }
+  
 }

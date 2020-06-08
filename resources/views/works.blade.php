@@ -29,6 +29,8 @@
                         <td>{{$work->direction}}</td>
                         <td>{{$work->budget}}</td>
                         <td>{{$work->cost}}</td>
+                        <td><a href="{{url('mail/'.$work->client_id)}}">Contacto</a></td>
+                        <td><a href="{{url('trabajos/'.$work->id)}}" class="a_delete">X</a></td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -42,9 +44,9 @@
                 @csrf
                 <div class="form-group text-md-center ">
                     <h3>Registrar Nuevo trabajo</h3>
-                @if (session('status2'))
+                @if (session('status'))
                     <div class="alert alert-success" role="alert">
-                        {{ session('status2') }}
+                        {{ session('status') }}
                     </div>
                 @endif
                 </div>
@@ -52,7 +54,7 @@
                     <label for="client" class="col-md-4 col-form-label text-md-right">{{ __('Email del cliente') }}</label>
 
                     <div class="col-md-6">
-                        <input id="client" type="text" class="form-control @error('client') is-invalid @enderror" name="client" value="{{ old('client') }}" required autofocus>
+                        <input id="client" type="text" class="form-control @error('client') is-invalid @enderror" name="client" value="{{ old('email') }}" required autocomplete="client">
                         <a href="" class="ml-3" data-toggle="modal" data-target="#exampleModal">
                             Nuevo Cliente
                         </a>
@@ -124,17 +126,12 @@
                     <form method="POST" action="{{ route('newClient') }}">
                         @csrf
                         <div class="form-group text-md-center">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
         
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"  required autocomplete="name" autofocus>
         
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -162,9 +159,9 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Telefono') }}</label>
         
                             <div class="col-md-6">
-                                <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" required>
+                                <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" pattern="[0-9]{9}" required>
         
-                                @error('password')
+                                @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

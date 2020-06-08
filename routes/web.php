@@ -21,7 +21,10 @@ Auth::routes();
 
 Route::get('/trabajos', 'WorksController@index')->name('works');
 Route::get('/cliente/{id}', 'ClientsController@getClient');
+Route::get('/trabajos/{id}', 'WorksController@deletejob');
+Route::get('/mail/{id}', 'MailController@index');
 
-Route::post('/newClient', 'WorksController@storeClient')->name('newClient');
+Route::post('/newClient', 'ClientsController@storeClient')->name('newClient');
 Route::post('/newJob', 'WorksController@storeJob')->name('newJob');
-
+Route::post('/mail/send', 'MailController@sendMail')->name('send');
+Route::put('/cliente/{id}', 'ClientsController@editClient');
