@@ -19,8 +19,8 @@
                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
 
                 <div class="col-md-6">
-                    <label class="col-md-4 col-form-label">{{$mailData[0]->email}}</label>
-                    <input id="email" type="hidden" name="email" value="{{$mailData[0]->email}}">
+                    <label class="col-md-4 col-form-label">{{$mailData->email}}</label>
+                    <input id="email" type="hidden" name="email" value="{{$mailData->email}}">
 
                     @error('email')
                         <span class="invalid-feedback" role="alert">

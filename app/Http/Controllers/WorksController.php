@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Works;
 use App\Http\Controllers\ClientsController;
+use Doctrine\Inflector\Rules\Word;
+use App\Works;
 
 class WorksController extends Controller
 {
@@ -19,8 +20,8 @@ class WorksController extends Controller
 
     public function index()
     {
-        $works = Works::with('client')->paginate(15);
-        return view('works',compact('works'));
+        $worksData = Works::with('client')->paginate(15);
+        return view('works',compact('worksData'));
     }
     
     public function storeJob(Request $request)
@@ -33,22 +34,28 @@ class WorksController extends Controller
         ]);
         $status="Email no es correcto o cliente no creado";
         $id =  $this->clientController->getIdClient($validData['client']);
-        $emailClient = "emaiul";
-
+      
         if($id != null)
         {
-            DB::table('works')->insert(
-                ['direction' =>$validData['direction'],'budget' =>$validData['budget'],'cost' =>$validData['cost'],'client_id' => $id->id, 'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now()]
-            );
+
+            $newJob = new Works;
+            $newJob->direction =$validData['direction'];
+            $newJob->budget =$validData['budget'];
+            $newJob->cost =$validData['cost'];
+            $newJob->client_id =$id[0]->id;
+            $newJob->save();
+          
             $status = "Trabajo insertado correctamente";
         }
-        return view('works',compact('status'));
+        return back()->with(compact('status'));
     }
     public function deleteJob($id)
     {
-        DB::table('works')->where('id', '=', $id)->delete();
-        $status ="Se ha elimidado correctamente";
+        
+        $deleteJob = works::findOrFail($id);
+        $deleteJob->delete();
+       
+        $status = "Se ha eliminado correctamente";
         return back()->with(compact('status'));
     }
   

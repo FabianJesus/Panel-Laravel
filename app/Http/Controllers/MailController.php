@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use App\Contact;
 
 class MailController extends Controller
 {
@@ -13,8 +16,9 @@ class MailController extends Controller
     {
         $client = new ClientsController();
         $mailData = $client->getClientData($id);
-        
-        $msgs = DB::table('contact')->where('email_client', '=', $mailData[0]->email)->paginate(15);
+
+        $msgs = Contact::where('email_client', '=', $mailData->email)->paginate(5);
+
 
         return view('emails.email',compact('mailData','msgs'));
     }
@@ -23,7 +27,7 @@ class MailController extends Controller
         $this->data = $request->all();
         $this->storageMail();
         Mail::send('emails.messageReceived',$request->all(),function($msg){
-            $msg->from('tu email','Admin');
+            $msg->from('Tu email','Admin');
             $msg->to($this->data['email'])->subject($this->data['affair']);
         });
         
@@ -32,9 +36,13 @@ class MailController extends Controller
         return back()->with(compact('status'));
     }
     public function storageMail(){
-        DB::table('contact')->insert(
-            ['name' =>$this->data['name'],'affair' =>$this->data['affair'],'email_client' =>$this->data['email'],'message' => $this->data['msg'], 'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now()]
-        );
+        
+        $mail = new Contact;
+        $mail->name = $this->data['name'];
+        $mail->affair = $this->data['affair'];
+        $mail->email_client = $this->data['email'];
+        $mail->message = $this->data['msg'];
+        $mail->save();
+      
     }
 }

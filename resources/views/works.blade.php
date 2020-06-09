@@ -26,10 +26,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($works as $work)
+                    @foreach ($worksData as $work)
                         <tr>
                         <td>
-                        <a href="{{url('cliente/'.$work->client_id)}}"  target="_blank">{{$work->client['name']}}</a>
+                        <a href="{{url('cliente/'.$work->client_id)}}">{{$work->client['name']}}</a>
                         </td>
                         <td>{{$work->direction}}</td>
                         <td>{{$work->budget}}</td>
@@ -40,7 +40,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                {{$works->links()}}
+                {{$worksData->links()}}
             </div>
         </div>
     </div>
