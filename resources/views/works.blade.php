@@ -26,7 +26,7 @@
                         @if ($statusDate == 'DESC')
                             <th>Fecha del Registro <a href="{{route('filtroFecha')}}">&#94;</a></th>
                         @else
-                            <th>Fecha del Registro <a href="{{route('filtroFecha')}}">v</a></th>
+                            <th>Fecha del registro <a href="{{route('filtroFecha')}}">v</a></th>
                         @endif
                     </tr>
                     </thead>

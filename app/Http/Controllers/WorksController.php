@@ -14,6 +14,7 @@ class WorksController extends Controller
     {
         $this->middleware('auth');
         $this->clientController = new ClientsController;
+        session()->put('statusDate','DESC');
     }
 
     public function index()
@@ -26,24 +27,19 @@ class WorksController extends Controller
     public function filterDate()
     {
         $this->checkDate();
-        $worksData = Works::with('client')->orderBy('created_at', $this->statusDate)->paginate(15);
-        $statusDate = $this->statusDate;
+        $statusDate = session()->get('statusDate');
+        $worksData = Works::with('client')->orderBy('created_at', $statusDate)->paginate(15);
+        
         return  view('works',compact('worksData','statusDate'));
     }
    
     private function checkDate()
     { 
-        if(!session()->get('statusDate')){
-            session()->put('statusDate','DESC');
-        }
-        $this->statusDate = session()->get('statusDate');
-        if($this->statusDate == 'ASC'){
-            $this->statusDate = 'DESC';
+        if(session()->get('statusDate') == 'ASC'){
             session()->put('statusDate','DESC');
             return;
         }
         session()->put('statusDate','ASC');
-        $this->statusDate = 'ASC';
     }
     public function storeJob(Request $request)
     {
