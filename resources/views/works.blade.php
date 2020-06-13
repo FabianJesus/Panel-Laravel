@@ -23,6 +23,11 @@
                         <th>Direccion</th>
                         <th>Presupuesto €</th>
                         <th>Coste €</th>
+                        @if ($statusDate == 'DESC')
+                            <th>Fecha del Registro <a href="{{route('filtroFecha')}}">&#94;</a></th>
+                        @else
+                            <th>Fecha del Registro <a href="{{route('filtroFecha')}}">v</a></th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -34,6 +39,7 @@
                         <td>{{$work->direction}}</td>
                         <td>{{$work->budget}}</td>
                         <td>{{$work->cost}}</td>
+                        <td>{{$work->created_at->format('d-m-Y')}}</td>
                         <td><a href="{{url('mail/'.$work->client_id)}}">Contacto</a></td>
                         <td><a href="{{url('trabajos/'.$work->id)}}" class="a_delete">X</a></td>
                         </tr>
