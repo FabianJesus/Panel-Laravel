@@ -13,6 +13,24 @@
     <div class="col-md-6">
         <div class="text-md-center col-md-12">
             <h3>Trabajos</h3>
+            <form method="post" class="mt-4 mb-2" action="{{ url('/trabajos/filtroNombre') }}">
+                @csrf
+                <div class="form-group row">
+                    <label for="nameClient" class="col-md-4 col-form-label text-md-right">Nombre</label>
+                    <div class="col-md-6">
+                        <input id="nameClient" type="nameClient" class="form-control @error('nameClient') is-invalid @enderror" name="nameClient" value="{{ old('nameClient') }}" required autocomplete="nameClient">
+
+                        @error('nameClient')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Filtrar
+                </button>
+            </form>
         </div>
         <div class="card col-md-12">
             <div class="table-responsive">
@@ -24,9 +42,9 @@
                         <th>Presupuesto €</th>
                         <th>Coste €</th>
                         @if ($statusDate == 'DESC')
-                            <th>Fecha del Registro <a href="{{route('filtroFecha')}}">&#94;</a></th>
+                            <th>Fecha del registro <a href="{{url('/trabajos/filtroFecha/ASC')}}">v</a></th> 
                         @else
-                            <th>Fecha del registro <a href="{{route('filtroFecha')}}">v</a></th>
+                            <th>Fecha del registro <a href="{{url('/trabajos/filtroFecha/DESC')}}">&#94;</a></th>
                         @endif
                     </tr>
                     </thead>
@@ -39,7 +57,7 @@
                         <td>{{$work->direction}}</td>
                         <td>{{$work->budget}}</td>
                         <td>{{$work->cost}}</td>
-                        <td>{{$work->created_at->format('d-m-Y')}}</td>
+                        <td>{{$work->created_at->format('d/m/Y')}}</td>
                         <td><a href="{{url('mail/'.$work->client_id)}}">Contacto</a></td>
                         <td><a href="{{url('trabajos/'.$work->id)}}" class="a_delete">X</a></td>
                         </tr>
@@ -76,7 +94,7 @@
                     <label for="direction" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
 
                     <div class="col-md-6">
-                        <input id="direction" type="text" class="form-control @error('direction') is-invalid @enderror" name="direction" value="{{ old('direction') }}" required autocomplete="direction" autofocus>
+                        <input id="direction" type="text" class="form-control @error('direction') is-invalid @enderror" name="direction" value="{{('direction') }}" required autocomplete="direction" autofocus>
 
                         @error('direction')
                             <span class="invalid-feedback" role="alert">

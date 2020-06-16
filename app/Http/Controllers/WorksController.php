@@ -24,23 +24,20 @@ class WorksController extends Controller
         return view('works',compact('worksData','statusDate'));
     }
 
-    public function filterDate()
-    {
-        $this->checkDate();
-        $statusDate = session()->get('statusDate');
-        $worksData = Works::with('client')->orderBy('created_at', $statusDate)->paginate(15);
+    public function filterDate($statusDate)
+    {   
         
+        $worksData = Works::with('client')->orderBy('created_at', $statusDate)->paginate(15);
         return  view('works',compact('worksData','statusDate'));
     }
-   
-    private function checkDate()
-    { 
-        if(session()->get('statusDate') == 'ASC'){
-            session()->put('statusDate','DESC');
-            return;
-        }
-        session()->put('statusDate','ASC');
-    }
+    public function filterName(Request $request){
+      
+        $statusDate = 'DESC';
+        $worksData = Works::join("clients","Works.client_id","=","clients.id")
+        ->orWhere('name', 'like', '%' . $request['nameClient'] . '%')
+        ->paginate(15);
+       return  view('works',compact('worksData','statusDate'));
+       }
     public function storeJob(Request $request)
     {
         $validData = $request->validate([
