@@ -18,7 +18,7 @@
                 <div class="form-group row">
                     <label for="nameClient" class="col-md-4 col-form-label text-md-right">Nombre</label>
                     <div class="col-md-6">
-                        <input id="nameClient" type="nameClient" class="form-control @error('nameClient') is-invalid @enderror" name="nameClient" value="{{ old('nameClient') }}" required autocomplete="nameClient">
+                        <input id="nameClient" type="nameClient" class="form-control @error('nameClient') is-invalid @enderror" name="nameClient" value="{{$nameclient}}" required autocomplete="nameClient">
 
                         @error('nameClient')
                             <span class="invalid-feedback" role="alert">
@@ -30,6 +30,7 @@
                 <button type="submit" class="btn btn-primary">
                     Filtrar
                 </button>
+                <a href="{{route('works')}}">Quitar Filtros</a>
             </form>
         </div>
         <div class="card col-md-12">

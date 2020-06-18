@@ -9,7 +9,7 @@ use App\Works;
 
 class WorksController extends Controller
 {
-    private $clientController,$statusDate;
+    private $clientController;
     public function __construct()
     {
         $this->middleware('auth');
@@ -20,23 +20,31 @@ class WorksController extends Controller
     public function index()
     {
         $statusDate = 'DESC';
+        $nameclient = '';
         $worksData = Works::with('client')->orderBy('created_at', $statusDate)->paginate(15);
-        return view('works',compact('worksData','statusDate'));
+        return view('works',compact('worksData','statusDate','nameclient'));
     }
 
     public function filterDate($statusDate)
     {   
-        
-        $worksData = Works::with('client')->orderBy('created_at', $statusDate)->paginate(15);
-        return  view('works',compact('worksData','statusDate'));
+        session()->put('statusDate',$statusDate);
+        $nameclient = session()->get('nameClient');
+        if(!$nameclient){
+            $worksData = Works::with('client')->orderBy('created_at', $statusDate)->paginate(15);
+            return  view('works',compact('worksData','statusDate'));
+        }
+        $worksData = Works::join("clients","Works.client_id","=","clients.id")->orWhere('name', 'like', '%' . $nameclient . '%')->orderBy('Works.created_at', $statusDate)->paginate(15);
+        return  view('works',compact('worksData','statusDate','nameclient'));
     }
     public function filterName(Request $request){
-      
-        $statusDate = 'DESC';
+        $statusDate =  session()->get('statusDate');
+        session()->put('nameClient',$request['nameClient']);
+        $nameclient = $request['nameClient'];
+        
         $worksData = Works::join("clients","Works.client_id","=","clients.id")
-        ->orWhere('name', 'like', '%' . $request['nameClient'] . '%')
+        ->orWhere('name', 'like', '%' . $request['nameClient'] . '%')->orderBy('Works.created_at', $statusDate)
         ->paginate(15);
-       return  view('works',compact('worksData','statusDate'));
+       return  view('works',compact('worksData','statusDate','nameclient'));
        }
     public function storeJob(Request $request)
     {
