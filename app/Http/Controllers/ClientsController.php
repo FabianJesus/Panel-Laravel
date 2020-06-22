@@ -12,6 +12,10 @@ class ClientsController extends Controller
     {
         $this->middleware('auth');
     }
+    public function index(){
+        $clientsData = clients::orderBy('created_at')->paginate(15);
+        return  view('clientsList',compact('clientsData'));
+    }
     public function getClient($id)
     {
         $client = $this->getClientData($id);

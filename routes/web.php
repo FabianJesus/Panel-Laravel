@@ -20,7 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/trabajos', 'WorksController@index')->name('works');
-Route::get('/cliente/{id}', 'ClientsController@getClient');
+Route::get('/clientes', 'ClientsController@index')->name('client');
+Route::get('/clientes/{id}', 'ClientsController@getClient');
 Route::get('/trabajos/{id}', 'WorksController@deletejob');
 Route::get('/mail/{id}', 'MailController@index');
 Route::get('/trabajos/filtroFecha/{fecha}', 'WorksController@filterDate');

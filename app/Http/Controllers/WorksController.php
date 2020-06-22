@@ -30,8 +30,9 @@ class WorksController extends Controller
         session()->put('statusDate',$statusDate);
         $nameclient = session()->get('nameClient');
         if(!$nameclient){
+            $nameclient ='';
             $worksData = Works::with('client')->orderBy('created_at', $statusDate)->paginate(15);
-            return  view('works',compact('worksData','statusDate'));
+            return  view('works',compact('worksData','statusDate','nameclient'));
         }
         $worksData = Works::join("clients","Works.client_id","=","clients.id")->orWhere('name', 'like', '%' . $nameclient . '%')->orderBy('Works.created_at', $statusDate)->paginate(15);
         return  view('works',compact('worksData','statusDate','nameclient'));

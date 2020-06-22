@@ -3,7 +3,12 @@
 @section('content')
 <div class="card">
    
-    <div class="card-header">Trabajos</div>
+    <div class="card-header justify-content-center">
+        <nav class="nav d-flex container">
+          <a class="p-2 text-muted" href="{{route('works')}}">Trabajos</a>
+          <a class="p-2 text-muted" href="{{route('client')}}">Clientes</a> 
+        </nav>
+    </div>
     @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }};
@@ -53,7 +58,7 @@
                     @foreach ($worksData as $work)
                         <tr>
                         <td>
-                        <a href="{{url('cliente/'.$work->client_id)}}">{{$work->client['name']}}</a>
+                        <a href="{{url('clientes/'.$work->client_id)}}">{{$work->client['name']}}</a>
                         </td>
                         <td>{{$work->direction}}</td>
                         <td>{{$work->budget}}</td>
