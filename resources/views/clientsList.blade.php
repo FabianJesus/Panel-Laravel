@@ -14,7 +14,7 @@
         </div>
     @endif
     <div class="card col-md-12">
-        <div class="table-responsive container">
+        <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>

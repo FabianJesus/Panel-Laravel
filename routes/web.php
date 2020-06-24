@@ -31,3 +31,10 @@ Route::post('/newClient', 'ClientsController@storeClient')->name('newClient');
 Route::post('/newJob', 'WorksController@storeJob')->name('newJob');
 Route::post('/mail/send', 'MailController@sendMail')->name('send');
 Route::put('/cliente/{id}', 'ClientsController@editClient');
+
+Route::get('Evento/form','ControllerEvent@form');
+Route::post('Evento/create','ControllerEvent@create');
+Route::get('Evento/details/{id}','ControllerEvent@details');
+Route::get('Evento/index','ControllerEvent@index')->name('calendar');
+Route::get('Evento/index/{month}','ControllerEvent@index_month');
+Route::post('Evento/calendario','ControllerEvent@calendario');

@@ -4,10 +4,7 @@
 <div class="card">
    
     <div class="card-header justify-content-center">
-        <nav class="nav d-flex container">
-          <a class="p-2 text-muted" href="{{route('works')}}">Trabajos</a>
-          <a class="p-2 text-muted" href="{{route('client')}}">Clientes</a> 
-        </nav>
+        @include('includes.nav2')
     </div>
     @if (session('status'))
         <div class="alert alert-success" role="alert">
