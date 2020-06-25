@@ -52,6 +52,11 @@
             </div>
         </div>
     </nav>
+    @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }};
+        </div>
+    @endif
     @include('includes.nav2')
     <div class="container">
       <p class="lead">

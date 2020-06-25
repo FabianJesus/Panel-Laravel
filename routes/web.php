@@ -37,4 +37,5 @@ Route::post('Evento/create','ControllerEvent@create');
 Route::get('Evento/details/{id}','ControllerEvent@details');
 Route::get('Evento/index','ControllerEvent@index')->name('calendar');
 Route::get('Evento/index/{month}','ControllerEvent@index_month');
+Route::get('Evento/delete/{id}','ControllerEvent@delete');
 Route::post('Evento/calendario','ControllerEvent@calendario');

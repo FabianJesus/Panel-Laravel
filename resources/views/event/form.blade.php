@@ -84,15 +84,16 @@
           @csrf
           <div class="fomr-group">
             <label>Titulo</label>
-            <input type="text" class="form-control" name="titulo">
+            <input type="text" class="form-control" name="titulo" value="{{old('titulo')}}">
           </div>
           <div class="fomr-group">
             <label>Descripcion del Evento</label>
-            <input type="text" class="form-control" name="descripcion">
+            <textarea class="form-control" name="descripcion">{{old('descripcion')}}</textarea>
+            
           </div>
           <div class="fomr-group">
             <label>Fecha</label>
-            <input type="date" class="form-control" name="fecha">
+            <input type="date" class="form-control" name="fecha" value="{{old('fecha')}}">
           </div>
           <br>
           <input type="submit" class="btn btn-info" value="Guardar">

@@ -46,7 +46,11 @@ class ControllerEvent extends Controller
       return back()->with('success', 'Enviado exitosamente!');
 
     }
-
+    public function delete($id){
+      Event::where("id","=",$id)->delete();
+      $status = "Evento eliminado correctamente.";
+      return redirect("/Evento/index")->with(compact('status'));
+    }
     public function details($id){
 
       $event = Event::find($id);
@@ -111,10 +115,8 @@ class ControllerEvent extends Controller
       // numero de primer semana del mes
   
       $semana1 = date("W",strtotime($fecha));
-      echo $semana1;
       // numero de ultima semana del mes
       $semana2 = date("W",strtotime($daylast));
-      echo $semana2;
       // semana todal del mes
       // en caso si es diciembre
       if (date("m", strtotime($mes))==12) {
