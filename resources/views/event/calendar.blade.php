@@ -97,11 +97,17 @@
             <div class="col box-day">
               {{ $dayweek['dia']  }}
               <!-- evento -->
-              @foreach  ($dayweek['evento'] as $event) 
-                  <a class="badge badge-primary" href="{{ asset('/Evento/details/') }}/{{ $event->id }}">
+           @foreach  ($dayweek['evento'] as $event) 
+                  <a class="badge badge-primary" href="{{ url('/Evento/details/'.$event->id) }}">
                     {{ $event->titulo }}
                   </a>
               @endforeach
+              @foreach  ($dayweek['works'] as $work) 
+                  <a class="badge badge-primary" href="{{ url('/trabajos/'.$work->id) }}">
+                    Cliente: {{ $work->client['name'] }}<br> Direccion: {{ $work->direction }}
+                  </a>
+              @endforeach
+             
             </div>
           @else
           <div class="col box-dayoff">

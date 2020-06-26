@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ClientsController;
 use App\Works;
+use Carbon\Carbon;
 
 class WorksController extends Controller
 {
@@ -72,14 +73,26 @@ class WorksController extends Controller
         }
         return back()->with(compact('status'));
     }
+    public function getjob($id)
+    {
+        $statusDate = 'DESC';
+        $nameclient = '';
+        $worksData = Works::with('client')->where('id',$id)->get();
+        return view('works',compact('worksData','statusDate','nameclient'));
+    }
     public function deleteJob($id)
     {
-        
         $deleteJob = works::findOrFail($id);
         $deleteJob->delete();
        
         $status = "Se ha eliminado correctamente";
         return back()->with(compact('status'));
+    }
+    public function getWorkbyDate($data){
+        $date1 = new Carbon($data);
+        $date2 = new Carbon($data);
+        $date2->addDay(1)->subSecond(1);
+        return Works::with('client')->whereBetween('created_at', [$date1, $date2])->get();
     }
   
 }

@@ -22,7 +22,8 @@ Auth::routes();
 Route::get('/trabajos', 'WorksController@index')->name('works');
 Route::get('/clientes', 'ClientsController@index')->name('client');
 Route::get('/clientes/{id}', 'ClientsController@getClient');
-Route::get('/trabajos/{id}', 'WorksController@deletejob');
+Route::get('/trabajos/borrar/{id}', 'WorksController@deletejob');
+Route::get('/trabajos/{id}', 'WorksController@getjob');
 Route::get('/mail/{id}', 'MailController@index');
 Route::get('/trabajos/filtroFecha/{fecha}', 'WorksController@filterDate');
 

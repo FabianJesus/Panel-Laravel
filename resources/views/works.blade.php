@@ -62,12 +62,14 @@
                         <td>{{$work->cost}}</td>
                         <td>{{$work->created_at->format('d/m/Y')}}</td>
                         <td><a href="{{url('mail/'.$work->client_id)}}">Contacto</a></td>
-                        <td><a href="{{url('trabajos/'.$work->id)}}" class="a_delete">X</a></td>
+                        <td><a href="{{url('trabajos/borrar/'.$work->id)}}" class="a_delete">X</a></td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-                {{$worksData->links()}}
+                @if ($worksData  instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                    {{$worksData->links()}}
+                @endif
             </div>
         </div>
     </div>

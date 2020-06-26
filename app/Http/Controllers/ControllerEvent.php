@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\WorksController;
 use App\Event;
 
 class ControllerEvent extends Controller
 {   
+  private $works;
     function __construct()
     {
-       
+       $this->works = new WorksController();
         $this->mes =[
         'Jan' =>"Enero",
         'Feb' =>"Febrero",
@@ -96,7 +98,7 @@ class ControllerEvent extends Controller
 
     }
 
-    public static function calendar_month($month){
+    public function calendar_month($month){
       $mes = $month;
    
       //sacar el ultimo de dia del mes
@@ -143,13 +145,12 @@ class ControllerEvent extends Controller
             $datanew['dia'] = date("d", strtotime($datafecha));
             $datanew['fecha'] = $datafecha;
             //AGREGAR CONSULTAS EVENTO
+            $datanew['works'] = $this->works->getWorkbyDate($datafecha);
             $datanew['evento'] = Event::where("fecha",$datafecha)->get();
-
             array_push($weekdata,$datanew);
           }
           $dataweek['semana'] = $iweek;
           $dataweek['datos'] = $weekdata;
-       
           //$datafecha['horario'] = $datahorario;
           array_push($calendario,$dataweek);
       endwhile;
@@ -171,8 +172,7 @@ class ControllerEvent extends Controller
 
     public function spanish_month($month)
     {
-        return $this->mes[$month];
-       
+        return $this->mes[$month];      
     }
 
 }
