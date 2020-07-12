@@ -27,6 +27,7 @@
         "@fullcalendar/core": "^5.0.0",
         "@fullcalendar/daygrid": "^5.0.0",
         "fullcalendar": "^5.0.0",
-        "fullcalendar-scheduler": "^5.0.0"
+        "fullcalendar-scheduler": "^5.0.0",
+        "genealabs/phpgmaps": "~0.3.0"
     }
 }

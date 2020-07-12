@@ -26,6 +26,7 @@ Route::get('/trabajos/borrar/{id}', 'WorksController@deletejob');
 Route::get('/trabajos/{id}', 'WorksController@getjob');
 Route::get('/mail/{id}', 'MailController@index');
 Route::get('/trabajos/filtroFecha/{fecha}', 'WorksController@filterDate');
+Route::get('/mapa', 'GmapsController@init');
 
 Route::post('/trabajos/filtroNombre', 'WorksController@filterName');
 Route::post('/newClient', 'ClientsController@storeClient')->name('newClient');
