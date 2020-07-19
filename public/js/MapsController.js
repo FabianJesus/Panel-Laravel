@@ -14,7 +14,9 @@ class MapController{
         if(this.markerIcon){
             this.myMap.removeLayer(this.markerIcon);
         };
-        this.markerIcon = L.marker([latLng.lat, latLng.lng]).addTo(this.myMap)
+        this.markerIcon = L.marker([latLng.lat, latLng.lng]).addTo(this.myMap);
+        $('#lat').val(latLng.lat);
+        $('#lon').val(latLng.lng);
     }
     searchAdress() {
         const entrada = document.getElementById("adress");

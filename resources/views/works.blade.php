@@ -99,8 +99,11 @@
                     <label for="direction" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
 
                     <div class="col-md-6">
-                        <input id="direction" type="text" class="form-control @error('direction') is-invalid @enderror" name="direction" value="{{('direction') }}" required autocomplete="direction" autofocus>
-
+                        <div><input type="text" id="adress"><input type="button" value="Buscar" onclick="map.searchAdress()"></div>
+                        <div id="resultado"></div>
+                        <div id="myMap" style="height: 200px"></div>
+                        <input type="text" id="lat" hidden>
+                        <input type="text" id="lon" hidden>
                         @error('direction')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
