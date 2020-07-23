@@ -55,7 +55,7 @@
   <script src="{{ asset('js/MapsController.js') }}"></script>
   <script>
     window.onload = function () { 
-        const map = new MapController();
+        this.map = new MapController();
     }
   </script>
 </html>

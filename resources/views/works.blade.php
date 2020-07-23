@@ -57,7 +57,7 @@
                         <td>
                         <a href="{{url('clientes/'.$work->client_id)}}">{{$work->client['name']}}</a>
                         </td>
-                        <td>{{$work->direction}}</td>
+                        <td><a href="{{url('mapa?lat='.$work->lat.'&lon='.$work->lon.'')}}" target="_blank">Dirección</a></td>
                         <td>{{$work->budget}}</td>
                         <td>{{$work->cost}}</td>
                         <td>{{$work->created_at->format('d/m/Y')}}</td>
@@ -96,14 +96,14 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="direction" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
+                    <label for="direction" class="col-md-4 col-form-label text-md-right">{{ __('Dirección') }}</label>
 
                     <div class="col-md-6">
                         <div><input type="text" id="adress"><input type="button" value="Buscar" onclick="map.searchAdress()"></div>
                         <div id="resultado"></div>
                         <div id="myMap" style="height: 200px"></div>
-                        <input type="text" id="lat" hidden>
-                        <input type="text" id="lon" hidden>
+                        <input type="text" id="lat" name="lat" hidden>
+                        <input type="text" id="lon" name="lon" hidden>
                         @error('direction')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

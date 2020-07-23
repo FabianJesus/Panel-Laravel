@@ -44,4 +44,7 @@ class MapController{
       goAdress(lat1, lng1, lat2, lng2){
        this.myMap.fitBounds(new L.LatLngBounds(new L.LatLng(lat1, lng1), new L.LatLng(lat2, lng2)));
       }
+      addMarketWork(lat,lon){
+        this.markerIcon = L.marker([lat, lon]).addTo(this.myMap);
+      }
 }

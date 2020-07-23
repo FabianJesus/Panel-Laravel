@@ -16,7 +16,8 @@ class CreateWorksTable extends Migration
     {
         Schema::create('works', function (Blueprint $table) {
             $table->id();
-            $table->string('direction');
+            $table->float('lat');
+            $table->float('lon');
             $table->double('budget');
             $table->double('cost');
             $table->unsignedBigInteger('client_id');

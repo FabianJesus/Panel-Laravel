@@ -23,5 +23,13 @@
   <script src="js/MapsController.js"></script>
   <script>
     const map = new MapController();
+    map.addMarketWork(getParameterByName("lat"),getParameterByName("lon"));
+
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
   </script>
 </html>

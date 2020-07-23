@@ -51,19 +51,22 @@ class WorksController extends Controller
     public function storeJob(Request $request)
     {
         $validData = $request->validate([
-            'direction' => 'required|min:5|max:255',
             'budget' => 'numeric|required',
             'cost' => 'numeric|required',
-            'client'=> 'required|email'
+            'client'=> 'required|email',
+            'lat'=>'required',
+            'lon'=>'required'
         ]);
         $status="Email no es correcto o cliente no creado";
         $id =  $this->clientController->getIdClient($validData['client']);
-      
+         
+        
         if($id != null)
         {
 
             $newJob = new Works;
-            $newJob->direction =$validData['direction'];
+            $newJob->lat = floatval($validData['lat']);
+            $newJob->lon = floatval($validData['lon']);
             $newJob->budget =$validData['budget'];
             $newJob->cost =$validData['cost'];
             $newJob->client_id =$id[0]->id;
